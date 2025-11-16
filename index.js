@@ -33,18 +33,26 @@ async function run() {
 
         const db = client.db('freelanceMarketPlace');
         const jobsCollection = db.collection('jobCollections');
-        //get all jobs data from db and showing in ui
+        //get all jobs data from db and showing in ui and also filter via email
         app.get('/allJobs', async (req, res) => {
-            const cursor = jobsCollection.find();
+            // console.log("Received email:", req.query.email);
+            const email = req.query.email;
+            const query = {};
+            if (email) {
+                query.userEmail = email;
+            }
+            // console.log("Mongo Query:", query);
+            const cursor = jobsCollection.find(query);
             const result = await cursor.toArray();
             res.send(result);
-        })
+        });
         app.get('/allJobs/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
             const result = await jobsCollection.findOne(query);
             res.send(result);
         })
+
         app.post('/addJob', async (req, res) => {
             const newJob = req.body;
             const result = await jobsCollection.insertOne(newJob);
