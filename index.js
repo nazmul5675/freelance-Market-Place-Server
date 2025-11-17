@@ -33,6 +33,7 @@ async function run() {
 
         const db = client.db('freelanceMarketPlace');
         const jobsCollection = db.collection('jobCollections');
+        const acceptedJobsCollection = db.collection('acceptedJobsCollection');
         //get all jobs data from db and showing in ui and also filter via email
         app.get('/allJobs', async (req, res) => {
             // console.log("Received email:", req.query.email);
@@ -77,6 +78,13 @@ async function run() {
             const result = await jobsCollection.deleteOne(query);
             res.send(result)
         })
+
+        app.post('/acceptedJobs', async (req, res) => {
+            const newAcceptedJob = req.body;
+            const result = await acceptedJobsCollection.insertOne(newAcceptedJob);
+            res.send(result);
+        })
+
 
 
 
