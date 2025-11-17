@@ -58,6 +58,19 @@ async function run() {
             const result = await jobsCollection.insertOne(newJob);
             res.send(result);
         })
+        // update
+        app.patch('/allJobs/:id', async (req, res) => {
+            const id = req.params.id;
+            const updateJob = req.body;
+            const query = { _id: new ObjectId(id) }
+            const update = {
+                $set: {
+                    title: updateJob.title, category: updateJob.category, summary: updateJob.summary, coverImage: updateJob.coverImage
+                }
+            }
+            const result = await jobsCollection.updateOne(query, update)
+            res.send(result)
+        })
         app.delete('/allJobs/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
