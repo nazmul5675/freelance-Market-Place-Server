@@ -84,6 +84,22 @@ async function run() {
             const result = await acceptedJobsCollection.insertOne(newAcceptedJob);
             res.send(result);
         })
+        app.get('/acceptedJobs', async (req, res) => {
+            const email = req.query.email;
+            const query = {};
+            if (email) {
+                query.userEmail = email;
+            }
+            const cursor = acceptedJobsCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+        })
+        app.delete('/acceptedJobs/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await acceptedJobsCollection.deleteOne(query);
+            res.send(result)
+        })
 
 
 
