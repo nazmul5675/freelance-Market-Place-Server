@@ -111,5 +111,3 @@ run().catch(console.dir);
 app.listen(port, () => {
     console.log(`Freelance Service listening on port ${port}`)
 })
-// const serverless = require('serverless-http');
-// module.exports = serverless(app);
