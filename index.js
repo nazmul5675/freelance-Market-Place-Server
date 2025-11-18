@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 
 async function run() {
     try {
-        await client.connect();
+        // await client.connect();
 
         const db = client.db('freelanceMarketPlace');
         const jobsCollection = db.collection('jobCollections');
@@ -100,33 +100,16 @@ async function run() {
             const result = await acceptedJobsCollection.deleteOne(query);
             res.send(result)
         })
-
-
-
-
-
-
-        await client.db("admin").command({ ping: 1 });
+        // await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     }
     finally {
-
-
     }
 }
 run().catch(console.dir);
 
-
-
-
-
-
-
-
-
-
-
-
 app.listen(port, () => {
     console.log(`Freelance Service listening on port ${port}`)
 })
+// const serverless = require('serverless-http');
+// module.exports = serverless(app);
